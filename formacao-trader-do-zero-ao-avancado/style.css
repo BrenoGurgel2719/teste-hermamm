@@ -1,7 +1,6 @@
 /* ================================================================
    style.css — FTZA Landing Page
    Organização: segue a ordem de aparição no HTML
-   Autor: Hermann Greb
    ================================================================
 
    ÍNDICE
@@ -36,32 +35,31 @@
 ================================================================ */
 
 :root {
-  /* Paleta principal */
   --green:       #4DEDB5;  /* acento principal */
   --green-light: #23c48b;  /* variante mais clara */
   --green-alt:   #00ff88;  /* variante mais viva (hover cards antigos) */
   --red-alert:   #ff5252;  /* velas negativas / alertas */
 
-  /* Fundos */
+
   --bg-black:    #000000;
   --bg-dark:     #0a0a0a;
   --card-bg:     #111111;
   --card-bg-2:   #161616;
 
-  /* Texto */
+
   --text-white:  #ffffff;
   --text-light:  #cccccc;
   --text-muted:  #888888;
   --text-dim:    #555555;
 
-  /* Bordas */
+
   --border:      rgba(255, 255, 255, 0.08);
   --border-green: rgba(77, 237, 181, 0.2);
 
-  /* Tipografia */
+  
   --font-main: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  /* Transições */
+  
   --ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -89,7 +87,7 @@ img {
   display: block;
 }
 
-/* Remove list styling quando semântica é garantida por role="list" */
+
 ul, ol {
   list-style: none;
   padding: 0;
@@ -144,7 +142,6 @@ ul, ol {
 }
 
 /* 2c. Botão CTA principal
-   Substitui .btn-cta-price (nome genérico sem dependência de contexto)
 */
 .btn-cta {
   display: block;
@@ -218,7 +215,7 @@ ul, ol {
 .delay-5 { transition-delay: 0.5s; }
 .delay-6 { transition-delay: 0.6s; }
 
-/* 2e. Glow decorativo de fundo (presente em várias seções) */
+/* 2e. Glow decorativo de fundo */
 .glow-bg {
   position: absolute;
   top: 50%;
@@ -263,14 +260,13 @@ ul, ol {
   filter: saturate(0.6);
 }
 
-/* Overlay uniforme: escurece para garantir legibilidade */
+
 .hero-overlay {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.72);
 }
 
-/* Overlay vinheta: escurece bordas, clareia centro */
 .hero-overlay-vignette {
   position: absolute;
   inset: 0;
@@ -340,7 +336,7 @@ ul, ol {
   margin: 0 auto;
 }
 
-/* Título H1 com animação própria (não depende do sistema reveal) */
+/* Título H1 com animação própria*/
 .hero-title {
   font-family: var(--font-main);
   font-size: clamp(2rem, 4.5vw, 3.6rem);
@@ -396,7 +392,7 @@ ul, ol {
   line-height: 1;
 }
 
-/* ACESSIBILIDADE FIX: contraste mínimo 4.5:1 em fundo preto */
+
 .hero-stat-label {
   font-size: 0.68rem;
   color: rgba(255, 255, 255, 0.55);
@@ -420,15 +416,15 @@ ul, ol {
   width: 100%;
 }
 
-/* Variante inline do botão CTA (herda .btn-cta, ajusta largura) */
+
 .hero-cta {
   width: auto;
   max-width: 480px;
   padding: 20px 48px;
-  margin-bottom: 0; /* sobrescreve margem do .btn-cta */
+  margin-bottom: 0; /
 }
 
-/* ACESSIBILIDADE FIX: contraste mínimo 4.5:1 em fundo preto */
+
 .hero-cta-note {
   display: flex;
   align-items: center;
@@ -523,7 +519,7 @@ ul, ol {
   font-weight: 300;
 }
 
-/* Destaque inline de texto (sublinhado verde) */
+
 .highlight {
   color: var(--text-white);
   font-weight: 700;
@@ -542,7 +538,7 @@ ul, ol {
   opacity: 0.3;
 }
 
-/* Pills de diferencial */
+
 .benefit-pills {
   display: flex;
   flex-direction: column;
