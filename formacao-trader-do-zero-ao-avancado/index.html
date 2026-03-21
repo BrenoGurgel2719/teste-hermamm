@@ -28,8 +28,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <!-- ─── Preload da imagem hero (LCP crítico) ─────────────────── -->
-
-  <link rel="preload" as="image" href="imagens/FTZA_Mobile_Oficial1-888x1024.avif" fetchpriority="high">
+  <!--
+    IMPORTANTE: quando converter a imagem para WebP, troque a linha abaixo:
+      -->
+  <link rel="preload" as="image" href="imagens/FTZA_Mobile_Oficial1-888x1024.webp" type="image/webp" fetchpriority="high">
 
   <!-- ─── Fontes: carregamento assíncrono (não bloqueia render) ── -->
   <link rel="preload" as="style"
@@ -40,7 +42,10 @@
   </noscript>
 
   <!-- ─── CSS INLINE (elimina request render-blocking) ─────────── -->
-  
+  <!--
+    Para manutenção: edite o arquivo style.css e cole o conteúdo aqui.
+    Manter inline garante que o browser não precise de um round-trip extra.
+  -->
   <style>
 :root{--green:#4DEDB5;--green-light:#23c48b;--green-alt:#00ff88;--red-alert:#ff5252;--bg-black:#000000;--bg-dark:#0a0a0a;--card-bg:#111111;--card-bg-2:#161616;--text-white:#ffffff;--text-light:#cccccc;--text-muted:#888888;--text-dim:#555555;--border:rgba(255,255,255,0.08);--border-green:rgba(77,237,181,0.2);--font-main:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;--ease-smooth:cubic-bezier(0.2,0.8,0.2,1)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -269,6 +274,21 @@ ul,ol{list-style:none;padding:0}
 @media(max-width:900px){.hero-bg img{transform:translateX(0);object-position:65% top}.hero-content{padding:100px 20px 80px}.hero-title{font-size:clamp(1.8rem,7vw,2.6rem)}.hero-stats{gap:18px}.hero-stat-num{font-size:1.4rem}.hero-cta{width:100%;max-width:100%;padding:18px 24px}.definition-grid,.para-quem-section .container{grid-template-columns:1fr;gap:40px;text-align:center}.etery-grid{grid-template-columns:1fr}.garantia-inner{grid-template-columns:1fr;text-align:center;padding:40px 28px;gap:32px}.garantia-badge-wrap{display:flex;justify-content:center}.garantia-pills{justify-content:center}}
 @media(max-width:768px){.pill:hover{transform:none}}
 @media(max-width:600px){.results-grid{grid-template-columns:repeat(2,1fr);gap:10px}.hero-stat-divider{display:none}.hero-stats{gap:24px 16px}}
+
+/* Hero above-fold: animações CSS puras, sem opacity:0 inicial dependente de JS */
+.hero-anim {
+  opacity: 0;
+  animation: hero-fade-up 0.7s ease forwards;
+}
+.hero-anim.delay-1 { animation-delay: 0.1s; }
+.hero-anim.delay-2 { animation-delay: 0.2s; }
+.hero-anim.delay-3 { animation-delay: 0.3s; }
+.hero-anim.delay-4 { animation-delay: 0.4s; }
+.hero-anim.delay-5 { animation-delay: 0.5s; }
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
   </style>
 
   <!-- ─── Schema.org: Course (SEO rich results) ────────────────── -->
@@ -294,7 +314,10 @@ ul,ol{list-style:none;padding:0}
   </script>
 
   <!-- ─── Scripts de rastreio: carregados após interação do usuário ─
-    
+       Estratégia: inicializa as filas imediatamente (sem rede),
+       injeta os scripts reais apenas quando o usuário age (click /
+       scroll / touch) ou após 4 s — reduz TBT e economiza ~1 MB de JS
+       no carregamento inicial.
   ──────────────────────────────────────────────────────────────────── -->
   <script>
     /* ── Inicializa dataLayer do GTM (sem baixar nada ainda) ── */
@@ -311,7 +334,7 @@ ul,ol{list-style:none;padding:0}
     fbq('init', '149673536338127');
     fbq('track', 'PageView');
 
-    
+    /* ── Injeta os scripts reais de forma adiada ── */
     var _trackingLoaded = false;
     function _loadTracking() {
       if (_trackingLoaded) return;
@@ -371,18 +394,15 @@ ul,ol{list-style:none;padding:0}
 
     <!-- Fundo: imagem + overlays de escurecimento -->
     <div class="hero-bg" aria-hidden="true">
-      
-      <picture>
-        <source srcset="imagens/FTZA_Mobile_Oficial1-888x1024.avif" type="image/webp">
-        <img
-          src="imagens/FTZA_Mobile_Oficial1-888x1024.avif"
+      <!--
+        DICA: quando converter para WebP/AVIF, adicione <source> dentro do <img
+          src="imagens/FTZA_Mobile_Oficial1-888x1024.png"
           alt=""
           width="888"
           height="1024"
           fetchpriority="high"
           decoding="async"
         >
-      </picture>
       <div class="hero-overlay"></div>
       <div class="hero-overlay-vignette"></div>
     </div>
@@ -390,16 +410,16 @@ ul,ol{list-style:none;padding:0}
     <!-- Conteúdo centralizado -->
     <div class="hero-content">
 
-      <div class="hero-eyebrow reveal-up">
+      <div class="hero-eyebrow hero-anim">
         <span class="hero-badge">
           <span class="hero-badge-dot"></span>
           Ex Trader de Banco · Método Proprietário
         </span>
       </div>
 
-      <div class="hero-logo-wrap reveal-up delay-1">
+      <div class="hero-logo-wrap hero-anim delay-1">
         <picture>
-          <source srcset="imagens/Logo_Ftza2-300x98.png" type="image/webp">
+          <source srcset="imagens/Logo_Ftza2-300x98.webp" type="image/webp">
           <img
             src="imagens/Logo_Ftza2-300x98.png"
             alt="FTZA — Formação Trader do Zero ao Avançado"
@@ -410,20 +430,20 @@ ul,ol{list-style:none;padding:0}
         </picture>
       </div>
 
-      <h1 class="hero-title reveal-up delay-2">
+      <h1 class="hero-title hero-anim delay-2">
         Nossa jornada para alcançar
         <span class="text-gradient">alta performance</span>
         e consistência definitiva.
       </h1>
 
-      <p class="hero-sub reveal-up delay-3">
+      <p class="hero-sub hero-anim delay-3">
         O método operacional completo que vai destravar seus
         <strong>6 dígitos de faturamento mensal</strong>
         no mercado financeiro — com uma única ação e poucas horas de tela.
       </p>
 
       <!-- Estatísticas rápidas -->
-      <div class="hero-stats reveal-up delay-4" aria-label="Números do curso">
+      <div class="hero-stats hero-anim delay-4" aria-label="Números do curso">
         <div class="hero-stat">
           <span class="hero-stat-num">+2.400</span>
           <span class="hero-stat-label">alunos formados</span>
@@ -441,7 +461,7 @@ ul,ol{list-style:none;padding:0}
       </div>
 
       <!-- CTA principal -->
-      <div class="hero-cta-wrap reveal-up delay-5">
+      <div class="hero-cta-wrap hero-anim delay-5">
         <a class="btn-cta hero-cta" href="#ancora">
           QUERO SER UM TRADER PROFISSIONAL
         </a>
@@ -494,21 +514,21 @@ ul,ol{list-style:none;padding:0}
           <!-- Diferenciais -->
           <div class="benefit-pills" role="list">
             <div class="pill reveal-right delay-3" role="listitem">
-              
+              <!-- Ícone: clock (inline SVG substitui Lucide) -->
               <span class="icone-hightlight-pill" aria-hidden="true">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
               </span>
               <span>Poucas horas de tela</span>
             </div>
             <div class="pill reveal-right delay-4" role="listitem">
-              
+              <!-- Ícone: target (inline SVG substitui Lucide) -->
               <span class="icone-hightlight-pill" aria-hidden="true">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
               </span>
               <span>Uma única ação/dia</span>
             </div>
             <div class="pill highlight-pill reveal-right delay-5" role="listitem">
-             
+              <!-- Ícone: shield-check (inline SVG substitui Lucide) -->
               <span class="icone-hightlight-pill" aria-hidden="true">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
               </span>
@@ -683,17 +703,17 @@ ul,ol{list-style:none;padding:0}
           <!-- Widgets flutuantes decorativos -->
           <div class="mockup-container center-items" aria-hidden="true">
             <div class="floating-widget w-1">
-              
+              <!-- Ícone: file-text (inline SVG substitui Lucide) -->
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
               <span>Checklist Operacional</span>
             </div>
             <div class="floating-widget w-2">
-             
+              <!-- Ícone: bar-chart-3 (inline SVG substitui Lucide) -->
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
               <span>Planilha de Gestão</span>
             </div>
             <div class="floating-widget w-3">
-            
+              <!-- Ícone: download-cloud (inline SVG substitui Lucide) -->
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
               <span>PDF Guia Rápido</span>
             </div>
@@ -723,96 +743,96 @@ ul,ol{list-style:none;padding:0}
         gera diariamente nas contas dos nossos traders.
       </h2>
 
-      
-      <div class="results-grid">
-        <div class="result-item">
-          <picture>
+      <!--
+        DICA DE OTIMIZAÇÃO DE IMAGENS:
+        Converta cada JPEG/PNG para WebP ou AVIF (economiza ~50-80% de tamanho).
+        O <picture>
             <source srcset="imagens/PRITN-7-2.webp" type="image/webp">
-            <img src="imagens/PRITN-7-2.webp" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="720" height="1600">
+            <img src="imagens/PRITN-7-2.jpeg" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="720" height="1600">
           </picture>
         </div>
         <div class="result-item">
           <picture>
             <source srcset="imagens/PRINT-8-2.webp" type="image/webp">
-            <img src="imagens/PRINT-8-2.webp" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="720" height="1600">
+            <img src="imagens/PRINT-8-2.jpeg" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="720" height="1600">
           </picture>
         </div>
         <div class="result-item">
           <picture>
             <source srcset="imagens/PRINT-6-2.webp" type="image/webp">
-            <img src="imagens/PRINT-6-2.webp" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="720" height="1600">
+            <img src="imagens/PRINT-6-2.jpeg" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="720" height="1600">
           </picture>
         </div>
         <div class="result-item">
           <picture>
             <source srcset="imagens/Print-5-2.webp" type="image/webp">
-            <img src="imagens/Print-5-2.webp" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="738" height="1600">
+            <img src="imagens/Print-5-2.jpeg" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="738" height="1600">
           </picture>
         </div>
         <div class="result-item">
           <picture>
             <source srcset="imagens/PRINT-4-2.webp" type="image/webp">
-            <img src="imagens/PRINT-4-2.webp" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="789" height="1280">
+            <img src="imagens/PRINT-4-2.jpeg" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="789" height="1280">
           </picture>
         </div>
         <div class="result-item">
           <picture>
             <source srcset="imagens/PRINT-3-2.webp" type="image/webp">
-            <img src="imagens/PRINT-3-2.webp" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="720" height="1600">
+            <img src="imagens/PRINT-3-2.jpeg" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="720" height="1600">
           </picture>
         </div>
         <div class="result-item">
           <picture>
             <source srcset="imagens/PRINT-2-2.webp" type="image/webp">
-            <img src="imagens/PRINT-2-2.webp" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="720" height="1600">
+            <img src="imagens/PRINT-2-2.jpeg" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="720" height="1600">
           </picture>
         </div>
         <div class="result-item">
           <picture>
             <source srcset="imagens/PRINT-1-2.webp" type="image/webp">
-            <img src="imagens/PRINT-1-2.webp" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="720" height="1600">
+            <img src="imagens/PRINT-1-2.jpeg" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="720" height="1600">
           </picture>
         </div>
         <div class="result-item">
           <picture>
             <source srcset="imagens/EBOOK-5-1.webp" type="image/webp">
-            <img src="imagens/EBOOK-5-1.webp" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="358" height="609">
+            <img src="imagens/EBOOK-5-1.jpeg" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="358" height="609">
           </picture>
         </div>
         <div class="result-item">
           <picture>
-            <source srcset="imagens/EBOOK-4-1 (1).webp" type="image/webp">
-            <img src="imagens/EBOOK-4-1 (1).webp" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="353" height="611">
+            <source srcset="imagens/EBOOK-4-1.webp" type="image/webp">
+            <img src="imagens/EBOOK-4-1.jpeg" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="353" height="611">
           </picture>
         </div>
         <div class="result-item">
           <picture>
             <source srcset="imagens/EBOOK-3-1.webp" type="image/webp">
-            <img src="imagens/EBOOK-3-1.webp" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="364" height="629">
+            <img src="imagens/EBOOK-3-1.jpeg" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="364" height="629">
           </picture>
         </div>
         <div class="result-item">
           <picture>
             <source srcset="imagens/EBOOK-2-1.webp" type="image/webp">
-            <img src="imagens/EBOOK-2-1.webp" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="348" height="622">
+            <img src="imagens/EBOOK-2-1.jpeg" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="348" height="622">
           </picture>
         </div>
         <div class="result-item">
           <picture>
             <source srcset="imagens/EBOOK-1-1.webp" type="image/webp">
-            <img src="imagens/EBOOK-1-1.webp" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="720" height="1600">
+            <img src="imagens/EBOOK-1-1.jpeg" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="720" height="1600">
           </picture>
         </div>
         <div class="result-item">
           <picture>
             <source srcset="imagens/10-2.webp" type="image/webp">
-            <img src="imagens/10-2.webp" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="720" height="1600">
+            <img src="imagens/10-2.jpeg" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="720" height="1600">
           </picture>
         </div>
         <div class="result-item">
           <picture>
             <source srcset="imagens/9-2.webp" type="image/webp">
-            <img src="imagens/9-2.webp" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="720" height="1600">
+            <img src="imagens/9-2.jpeg" alt="Resultado de aluno do FTZA" loading="lazy" decoding="async" width="720" height="1600">
           </picture>
         </div>
       </div>
@@ -886,7 +906,7 @@ ul,ol{list-style:none;padding:0}
 
           <picture>
             <source srcset="imagens/Logo_Ftza2.webp" type="image/webp">
-            <img src="imagens/Logo_Ftza2.webp" alt="FTZA — Formação Trader do Zero ao Avançado" class="price-card-logo" width="200" height="65" loading="lazy" decoding="async">
+            <img src="imagens/Logo_Ftza2.png" alt="FTZA — Formação Trader do Zero ao Avançado" class="price-card-logo" width="200" height="65" loading="lazy" decoding="async">
           </picture>
           <p class="price-card-headline">Comece sua jornada de trading hoje mesmo</p>
 
@@ -1101,7 +1121,7 @@ ul,ol{list-style:none;padding:0}
     <div class="container footer-inner">
 
       <picture>
-        <source srcset="imagens/Logo_Ftza2-300x98.png" type="image/webp">
+        <source srcset="imagens/Logo_Ftza2-300x98.webp" type="image/webp">
         <img src="imagens/Logo_Ftza2-300x98.png" alt="FTZA" class="footer-logo" width="120" height="39" loading="lazy" decoding="async">
       </picture>
 
