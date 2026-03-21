@@ -18,9 +18,9 @@ document.addEventListener('DOMContentLoaded', function () {
   ================================================================ */
 
   const REVEAL_SELECTORS = [
-    '.reveal-up:not(.hero-anim)',
-    '.reveal-left:not(.hero-anim)',
-    '.reveal-right:not(.hero-anim)',
+    '.reveal-up',
+    '.reveal-left',
+    '.reveal-right',
     '.result-item',
     '.para-quem-item',
     '.faq-item',
